@@ -40,7 +40,7 @@ namespace Plugin.DownloadManager
             _downloadManager = (Android.App.DownloadManager)Application.Context.GetSystemService (Context.DownloadService);
 
             // Add all items to the Queue that are pending, paused or running
-            LoopOnDownloads (ReinitializeFile);
+            LoopOnDownloads (new Action<ICursor> (cursor => ReinitializeFile (cursor)));
 
             // Check sequentially if parameters for any of the registered downloads changed
             StartDownloadWatcher ();
@@ -124,7 +124,7 @@ namespace Plugin.DownloadManager
             _downloadWatcherHandlerRunnable = new Java.Lang.Runnable (() => {
 
                 // Loop throught all files in the system-queue and update the data in the local queue
-                LoopOnDownloads (UpdateFileProperties);
+                LoopOnDownloads (cursor => UpdateFileProperties (cursor));
 
                 _downloadWatcherHandler.PostDelayed (_downloadWatcherHandlerRunnable, 1000);
             });

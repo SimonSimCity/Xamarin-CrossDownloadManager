@@ -8,7 +8,7 @@ namespace Plugin.DownloadManager
     /// </summary>
     public class CrossDownloadManager
     {
-        private static readonly Lazy<IDownloadManager> Implementation = new Lazy<IDownloadManager> (CreateDownloadManager, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+        private static Lazy<IDownloadManager> Implementation = new Lazy<IDownloadManager> (() => CreateDownloadManager (), System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
 #if __IOS__
         /// <summary>
