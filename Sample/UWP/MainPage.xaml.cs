@@ -4,6 +4,7 @@ using Plugin.DownloadManager.Abstractions;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,10 +16,10 @@ namespace UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
+        private BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
 
-        string path;
-        Downloader foo;
+        private string path;
+        private Downloader foo;
 
         public MainPage()
         {
@@ -38,7 +39,7 @@ namespace UWP
             foo = new Downloader();
         }
 
-        public void Download()
+        public async Task Download()
         {
             var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             path = Path.Combine(folder.Path, "data_10mb.test");
@@ -53,9 +54,11 @@ namespace UWP
 
             downloadBtn.Content = "Start downloading ...";
 
-            foo.InitializeDownload();
+            var rootFolder = Windows.Storage.KnownFolders.DocumentsLibrary.Path;
+            await foo.InitializeDownload(rootFolder);
 
-            foo.File.PropertyChanged += (sender, e) => {
+            foo.File.PropertyChanged += (sender, e) =>
+            {
                 System.Diagnostics.Debug.WriteLine("[Property changed] " + e.PropertyName + " -> " + sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null).ToString());
 
                 // Update UI text-fields
@@ -65,9 +68,11 @@ namespace UWP
                     case nameof(IDownloadFile.Status):
                         Statustext.Text = downloadFile.Status.ToString();
                         break;
+
                     case nameof(IDownloadFile.TotalBytesExpected):
                         BytesExpected.Text = downloadFile.TotalBytesExpected.ToString();
                         break;
+
                     case nameof(IDownloadFile.TotalBytesWritten):
                         BytesReceived.Text = downloadFile.TotalBytesWritten.ToString();
                         break;
@@ -104,9 +109,9 @@ namespace UWP
             foo.StartDownloading(CellularNetworkAllowed.IsChecked.HasValue && CellularNetworkAllowed.IsChecked.Value);
         }
 
-        private void downloadBtn_Click(object sender, RoutedEventArgs e)
+        private async void downloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            Download();
+            await Download();
         }
     }
 }
