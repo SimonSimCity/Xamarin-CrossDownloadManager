@@ -149,7 +149,14 @@ namespace Plugin.DownloadManager
 
                     if (destinationPathName != null)
                     {
-                        request.SetDestinationUri(Uri.FromFile(new Java.IO.File(destinationPathName)));
+                        var file = new Java.IO.File(destinationPathName);
+                        request.SetDestinationUri(Uri.FromFile(file));
+
+                        // Remove a file if exists because downloadManager.Enqueue will create the one
+                        if (file.Exists())
+                        {
+                            file.Delete();
+                        }
                     }
 
                     request.SetAllowedOverMetered(allowedOverMetered);
