@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.example.download_example">
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25" />
+	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="28" />
 	<!--
 	You have to add this permission when setting `PathNameForDownloadedFile`.
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	-->
-	<application android:label="Download Example"></application>
+  
+  <!-- usesCleartextTraffic must be enabled for Android 9 and downloads using http -->
+	<application android:label="Download Example" android:usesCleartextTraffic="true"></application>
 </manifest>

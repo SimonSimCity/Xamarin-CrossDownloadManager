@@ -166,7 +166,7 @@ namespace Plugin.DownloadManager
             switch ((DownloadStatus)cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnStatus))) {
             case DownloadStatus.Successful:
                 downloadFile.DestinationPathName = cursor.GetString(cursor.GetColumnIndex("local_uri"));
-                downloadFile.StatusDetails = default(string);
+                downloadFile.StatusDetails = string.Empty;
                 downloadFile.Status = DownloadFileStatus.COMPLETED;
                 RemoveFile (downloadFile);
                 break;
@@ -236,12 +236,12 @@ namespace Plugin.DownloadManager
                 break;
                     
             case DownloadStatus.Pending:
-                downloadFile.StatusDetails = default(string);
+                downloadFile.StatusDetails = string.Empty;
                 downloadFile.Status = DownloadFileStatus.PENDING;
                 break;
                     
             case DownloadStatus.Running:
-                downloadFile.StatusDetails = default(string);
+                downloadFile.StatusDetails = string.Empty;
                 downloadFile.Status = DownloadFileStatus.RUNNING;
                 break;
             }
