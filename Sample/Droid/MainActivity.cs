@@ -124,7 +124,23 @@ namespace DownloadExample.Droid
                     }
                 };
 
-                foo.StartDownloading(FindViewById<Switch>(Resource.Id.switch1).Checked);
+                try {
+                    foo.StartDownloading(FindViewById<Switch>(Resource.Id.switch1).Checked);
+                } catch (Java.Lang.IllegalArgumentException) {
+                    foo.File = null;
+                    button.Text = "Download crashed.";
+
+                    try {
+                        //Open the specific App Info page:
+                        Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings);
+                        intent.SetData(Android.Net.Uri.Parse("package:com.android.providers.downloads"));
+                        StartActivity(intent);
+                    } catch (ActivityNotFoundException) {
+                        //Open the generic Apps page:
+                        Intent intent = new Intent(Android.Provider.Settings.ActionManageApplicationsSettings);
+                        StartActivity(intent);
+                    }
+                }
             };
         }
     }

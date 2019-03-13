@@ -6,7 +6,7 @@ using Plugin.DownloadManager.Abstractions;
 namespace Plugin.DownloadManager
 {
     /// <summary>
-    /// The UWP implementation of the download manager.
+    /// The Mac implementation of the download manager.
     /// </summary>
     public class DownloadManagerImplementation : IDownloadManager
     {

@@ -56,6 +56,12 @@ namespace Plugin.DownloadManager.Abstractions
         string Url { get; }
 
         /// <summary>
+        /// Gets the destination path name of the file to download.
+        /// </summary>
+        /// <value>The destination path.</value>
+        string DestinationPathName { get; }
+
+        /// <summary>
         /// The headers that are send along when requesting the URL.
         /// </summary>
         /// <value>The headers.</value>

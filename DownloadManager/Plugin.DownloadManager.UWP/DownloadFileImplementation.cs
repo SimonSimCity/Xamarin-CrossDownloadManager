@@ -21,6 +21,19 @@ namespace Plugin.DownloadManager
 
         public string Url { get; }
 
+        private string _destinationPathName;
+
+        public string DestinationPathName
+        {
+            get { return _destinationPathName; }
+            set
+            {
+                if (Equals(_destinationPathName, value)) return;
+                _destinationPathName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DestinationPathName)));
+            }
+        }
+
         public IDictionary<string, string> Headers { get; }
 
         DownloadFileStatus _status;
@@ -92,6 +105,14 @@ namespace Plugin.DownloadManager
 
         public DownloadFileImplementation(DownloadOperation downloadOperation)
         {
+            try
+            {
+                Url = downloadOperation?.RequestedUri?.AbsoluteUri;
+            }
+            catch(InvalidOperationException e)
+            {
+                // Ignore it, this property is not necessary for the downloader itself.
+            }
             DownloadOperation = downloadOperation;
 
             var progress = new Progress<DownloadOperation>(ProgressChanged);
@@ -144,8 +165,8 @@ namespace Plugin.DownloadManager
             {
             } catch (Exception e)
             {
-                Status = DownloadFileStatus.FAILED;
                 StatusDetails = e.Message;
+                Status = DownloadFileStatus.FAILED;
             }
         }
 
@@ -153,6 +174,11 @@ namespace Plugin.DownloadManager
         {
             TotalBytesExpected = downloadOperation.Progress.TotalBytesToReceive;
             TotalBytesWritten = downloadOperation.Progress.BytesReceived;
+
+            if (downloadOperation.Progress.Status == BackgroundTransferStatus.Completed)
+            {
+                DestinationPathName = downloadOperation.ResultFile.Path;
+            }
 
             Status = downloadOperation.Progress.Status.ToDownloadFileStatus();
         }

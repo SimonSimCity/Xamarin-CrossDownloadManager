@@ -38,8 +38,8 @@ namespace Plugin.DownloadManager
             if (file == null)
                 return;
 
-            file.Status = DownloadFileStatus.FAILED;
             file.StatusDetails = error.LocalizedDescription;
+            file.Status = DownloadFileStatus.FAILED;
 
             Controller.RemoveFile (file);
         }
@@ -72,8 +72,8 @@ namespace Plugin.DownloadManager
             // On iOS 9 and later, this method is called even so the response-code is 400 or higher. See https://github.com/cocos2d/cocos2d-x/pull/14683
             var response = downloadTask.Response as NSHttpUrlResponse;
             if (response != null && response.StatusCode >= 400) {
-                file.Status = DownloadFileStatus.FAILED;
                 file.StatusDetails = "Error.HttpCode: " + response.StatusCode;
+                file.Status = DownloadFileStatus.FAILED;
             
                 Controller.RemoveFile (file);
                 return;
@@ -83,6 +83,11 @@ namespace Plugin.DownloadManager
             var destinationPathName = Controller.PathNameForDownloadedFile?.Invoke (file);
             if (destinationPathName != null) {
                 success = MoveDownloadedFile (file, location, destinationPathName);
+                file.DestinationPathName = destinationPathName;
+            }
+            else
+            {
+                file.DestinationPathName = location.ToString();
             }
 
             // If the file destination is unknown or was moved successfully ...

@@ -165,15 +165,13 @@ namespace Plugin.DownloadManager
 
             switch ((DownloadStatus)cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnStatus))) {
             case DownloadStatus.Successful:
+                downloadFile.DestinationPathName = cursor.GetString(cursor.GetColumnIndex("local_uri"));
                 downloadFile.StatusDetails = default(string);
                 downloadFile.Status = DownloadFileStatus.COMPLETED;
                 RemoveFile (downloadFile);
                 break;
                     
             case DownloadStatus.Failed:
-                downloadFile.Status = DownloadFileStatus.FAILED;
-                RemoveFile (downloadFile);
-
                 var reasonFailed = cursor.GetInt(cursor.GetColumnIndex(Android.App.DownloadManager.ColumnReason));
                 if (reasonFailed < 600) {
                     downloadFile.StatusDetails = "Error.HttpCode: " + reasonFailed;
@@ -211,11 +209,11 @@ namespace Plugin.DownloadManager
                         break;
                     }
                 }
+                downloadFile.Status = DownloadFileStatus.FAILED;
+                RemoveFile(downloadFile);
                 break;
                     
             case DownloadStatus.Paused:
-                downloadFile.Status = DownloadFileStatus.PAUSED;
-                
                 var reasonPaused = cursor.GetInt(cursor.GetColumnIndex(Android.App.DownloadManager.ColumnReason));
                 switch ((DownloadPausedReason)reasonPaused) {
                 case DownloadPausedReason.QueuedForWifi:
@@ -234,6 +232,7 @@ namespace Plugin.DownloadManager
                     downloadFile.StatusDetails = "Paused.Unregistered: " + reasonPaused;
                     break;
                 }
+                downloadFile.Status = DownloadFileStatus.PAUSED;
                 break;
                     
             case DownloadStatus.Pending:

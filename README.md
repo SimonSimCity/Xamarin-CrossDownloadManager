@@ -126,3 +126,11 @@ Everything you tell me is contributing to this project and helps me improving it
 ### Changes
 
 Moved the changelog to [CHANGELOG.md](https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/blob/develop/CHANGELOG.md)
+
+### Known issues
+
+#### Exception `java.lang.IllegalArgumentException: Unknown URL content://downloads/my_downloads` on Android when calling one of `IDownloadManager.Start (downloadFile)`, `IDownloadManager.Abort (downloadFile)` or `IDownloadManager.AbortAll (downloadFile)`
+
+This might occur because the user has disabled the system app `Download Manager`. You can kindly inform him using a message box after which you delegate him to the settings where he can enable it again. You can use the code-snippet I added in the sample (credits to [dashika](https://github.com/dashika) [#82](https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/issues/82)).
+
+https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/blob/dad3082365ef9161e982fdf1a4dba5f83c63c3ad/Sample/Droid/MainActivity.cs#L127-L142
