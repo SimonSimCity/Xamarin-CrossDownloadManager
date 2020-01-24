@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -115,10 +115,6 @@
     <Compile Include="ExtendedUrlSessionDownloadDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DownloadExample\DownloadExample.csproj">
-      <Project>{FEE6A3A2-9CDD-473C-8587-6C13241BD03A}</Project>
-      <Name>DownloadExample</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DownloadManager\Plugin.DownloadManager.Abstractions\Plugin.DownloadManager.Abstractions.csproj">
       <Project>{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}</Project>
       <Name>Plugin.DownloadManager.Abstractions</Name>
@@ -126,6 +122,10 @@
     <ProjectReference Include="..\..\DownloadManager\Plugin.DownloadManager.iOS\Plugin.DownloadManager.iOS.csproj">
       <Project>{2882AEEB-D4CD-4EB9-8A6C-6653B33681F0}</Project>
       <Name>Plugin.DownloadManager.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DownloadExample\DownloadExample.csproj">
+      <Project>{9c025c5c-451c-4221-a710-4b55f94473ef}</Project>
+      <Name>DownloadExample</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

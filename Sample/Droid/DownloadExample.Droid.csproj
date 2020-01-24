@@ -67,10 +67,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DownloadExample\DownloadExample.csproj">
-      <Project>{FEE6A3A2-9CDD-473C-8587-6C13241BD03A}</Project>
-      <Name>DownloadExample</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DownloadManager\Plugin.DownloadManager.Abstractions\Plugin.DownloadManager.Abstractions.csproj">
       <Project>{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}</Project>
       <Name>Plugin.DownloadManager.Abstractions</Name>
@@ -78,6 +74,10 @@
     <ProjectReference Include="..\..\DownloadManager\Plugin.DownloadManager.Android\Plugin.DownloadManager.Android.csproj">
       <Project>{56A56F17-7DE1-4CA1-9617-BF32E971AC84}</Project>
       <Name>Plugin.DownloadManager.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DownloadExample\DownloadExample.csproj">
+      <Project>{9c025c5c-451c-4221-a710-4b55f94473ef}</Project>
+      <Name>DownloadExample</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

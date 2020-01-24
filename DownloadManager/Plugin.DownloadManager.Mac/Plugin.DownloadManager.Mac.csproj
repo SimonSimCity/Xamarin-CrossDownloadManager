@@ -51,6 +51,7 @@
     <XamMacArch></XamMacArch>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="netstandard" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
@@ -67,6 +68,11 @@
       <Project>{6EDB0588-FFC5-4EF5-8A99-9E241D0F878D}</Project>
       <Name>Plugin.DownloadManager.Abstractions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
